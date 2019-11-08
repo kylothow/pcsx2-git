@@ -1,82 +1,66 @@
 # Maintainer: Maxime Gauduin <alucryd@archlinux.org>
 # Contributor: josephgbr <rafael.f.f1@gmail.com>
-# Contributor: Themaister <maister@archlinux.us>
+# Contributor: vEX <vex@niechift.com>
 
+pkgbase=pcsx2-git
 pkgname=pcsx2-git
-pkgver=1.5.0.r3254.88a02941f
+pkgver=10821.e2d899231
 pkgrel=1
 pkgdesc='A Sony PlayStation 2 emulator'
 arch=(x86_64)
 url=https://www.pcsx2.net
-license=(
-  GPL2
-  GPL3
-  LGPL2.1
-  LGPL3
-)
-depends=(
-  lib32-glew
-  lib32-libaio
-  lib32-libcanberra
-  lib32-libjpeg-turbo
-  lib32-libpcap
-  lib32-libpulse
-  lib32-portaudio
-  lib32-sdl2
-  lib32-soundtouch
-  lib32-wxgtk2
-)
+license=('GPL2' 'GPL3' 'LGPL2.1' 'LGPL3')
+depends=('lib32-libaio'
+         'lib32-portaudio'
+         'lib32-sdl2' 'lib32-soundtouch' 'lib32-wxgtk2'
+         'lib32-libpcap' 'lib32-libxml2')
 makedepends=(
-  clang
   cmake
   git
-  lib32-libglvnd
-  png++
+  clang
 )
-provides=(pcsx2)
-conflicts=(pcsx2)
-source=(git+https://github.com/PCSX2/pcsx2.git)
-sha256sums=(SKIP)
+source=(
+  git+https://github.com/PCSX2/pcsx2.git
+  git+https://github.com/PCSX2/xz.git
+)
+sha256sums=('SKIP' 'SKIP')
 
 pkgver() {
   cd pcsx2
 
-  git describe --tags | sed 's/^v//; s/-dev//; s/-/.r/; s/-g/./'
+  echo $(git rev-list --count master).$(git rev-parse --short master)
 }
 
 prepare() {
+  cd pcsx2
+  git submodule init
+  git config submodule.3rdparty/xz/xz.url ../xz
+  git submodule update 3rdparty/xz/xz
+
   if [[ -d build ]]; then
     rm -rf build
   fi
   mkdir build
-
-  # Disable ZeroGS and ZZOgl-PG
-  rm -rf pcsx2/plugins/{zerogs,zzogl-pg}
 }
 
 build() {
-  cd build
+  cd pcsx2/build
+  cmake .. \
+    -DCMAKE_BUILD_TYPE='Release' \
+    -DCMAKE_TOOLCHAIN_FILE='cmake/linux-compiler-i386-multilib.cmake' \
+    -DCMAKE_INSTALL_PREFIX='/usr' \
+    -DCMAKE_LIBRARY_PATH='/usr/lib32' \
+    -DPLUGIN_DIR='/usr/lib32/pcsx2' \
+    -DGAMEINDEX_DIR='/usr/share/pcsx2' \
+    -DPACKAGE_MODE='TRUE' \
+    -DXDG_STD='TRUE'
 
-  export CC=clang
-  export CXX=clang++
-  export CXXFLAGS="$CXXFLAGS -I/usr/include/harfbuzz"
-
-  cmake ../pcsx2 \
-    -DCMAKE_TOOLCHAIN_FILE=cmake/linux-compiler-i386-multilib.cmake \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_LIBRARY_PATH=/usr/lib32 \
-    -DPLUGIN_DIR=/usr/lib32/pcsx2 \
-    -DGAMEINDEX_DIR=/usr/share/pcsx2 \
-    -DEXTRA_PLUGINS=ON \
-    -DREBUILD_SHADER=ON \
-    -DGLSL_API=ON \
-    -DPACKAGE_MODE=ON \
-    -DXDG_STD=ON
   make
 }
 
 package() {
-  make DESTDIR="${pkgdir}" -C build install
+  cd pcsx2/build
+  make DESTDIR="${pkgdir}" install
 }
 
 # vim: ts=2 sw=2 et:
