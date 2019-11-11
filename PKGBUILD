@@ -4,17 +4,18 @@
 # Contributor: Themaister <maister@archlinux.us>
 # Contributor: vEX <vex@niechift.com>
 
-pkgbase=pcsx2-git
 pkgname=pcsx2-git
 pkgver=10821.e2d899231
 pkgrel=1
 pkgdesc="A Sony PlayStation 2 emulator"
 arch=('x86_64')
-url="https://www.pcsx2.net/"
+url="https://pcsx2.net/"
 license=('GPL2' 'GPL3' 'LGPL2.1' 'LGPL3')
 depends=('lib32-libaio' 'lib32-libpcap' 'lib32-libxml2' 'lib32-portaudio'
          'lib32-sdl2' 'lib32-soundtouch' 'lib32-wxgtk2')
 makedepends=('cmake' 'git' 'clang')
+provides=('pcsx2')
+conflicts=('pcsx2')
 source=("git+https://github.com/PCSX2/pcsx2.git"
         "git+https://github.com/PCSX2/xz.git")
 sha256sums=('SKIP' 'SKIP')
