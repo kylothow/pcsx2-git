@@ -1,28 +1,22 @@
-# Maintainer: Maxime Gauduin <alucryd@archlinux.org>
+# Maintainer: Michele Beccalossi <beccalossi.michele@gmail.com>
+# Contributor: Maxime Gauduin <alucryd@archlinux.org>
 # Contributor: josephgbr <rafael.f.f1@gmail.com>
+# Contributor: Themaister <maister@archlinux.us>
 # Contributor: vEX <vex@niechift.com>
 
 pkgbase=pcsx2-git
 pkgname=pcsx2-git
 pkgver=10821.e2d899231
 pkgrel=1
-pkgdesc='A Sony PlayStation 2 emulator'
-arch=(x86_64)
-url=https://www.pcsx2.net
+pkgdesc="A Sony PlayStation 2 emulator"
+arch=('x86_64')
+url="https://www.pcsx2.net/"
 license=('GPL2' 'GPL3' 'LGPL2.1' 'LGPL3')
-depends=('lib32-libaio'
-         'lib32-portaudio'
-         'lib32-sdl2' 'lib32-soundtouch' 'lib32-wxgtk2'
-         'lib32-libpcap' 'lib32-libxml2')
-makedepends=(
-  cmake
-  git
-  clang
-)
-source=(
-  git+https://github.com/PCSX2/pcsx2.git
-  git+https://github.com/PCSX2/xz.git
-)
+depends=('lib32-libaio' 'lib32-libpcap' 'lib32-libxml2' 'lib32-portaudio'
+         'lib32-sdl2' 'lib32-soundtouch' 'lib32-wxgtk2')
+makedepends=('cmake' 'git' 'clang')
+source=("git+https://github.com/PCSX2/pcsx2.git"
+        "git+https://github.com/PCSX2/xz.git")
 sha256sums=('SKIP' 'SKIP')
 
 pkgver() {
@@ -33,11 +27,12 @@ pkgver() {
 
 prepare() {
   cd pcsx2
+
   git submodule init
   git config submodule.3rdparty/xz/xz.url ../xz
   git submodule update 3rdparty/xz/xz
 
-  if [[ -d build ]]; then
+  if [ -d build ]; then
     rm -rf build
   fi
   mkdir build
@@ -45,6 +40,7 @@ prepare() {
 
 build() {
   cd pcsx2/build
+
   cmake .. \
     -DCMAKE_BUILD_TYPE='Release' \
     -DCMAKE_TOOLCHAIN_FILE='cmake/linux-compiler-i386-multilib.cmake' \
@@ -60,6 +56,7 @@ build() {
 
 package() {
   cd pcsx2/build
+
   make DESTDIR="${pkgdir}" install
 }
 
