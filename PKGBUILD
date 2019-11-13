@@ -44,6 +44,7 @@ build() {
 
   cmake .. \
     -DCMAKE_BUILD_TYPE='Release' \
+    -DCMAKE_BUILD_PO='FALSE' \
     -DCMAKE_TOOLCHAIN_FILE='cmake/linux-compiler-i386-multilib.cmake' \
     -DCMAKE_INSTALL_PREFIX='/usr' \
     -DCMAKE_LIBRARY_PATH='/usr/lib32' \
