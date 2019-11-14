@@ -53,7 +53,7 @@ build() {
     -DPACKAGE_MODE='TRUE' \
     -DXDG_STD='TRUE'
 
-  make
+  make -j$(nproc)
 }
 
 package() {
