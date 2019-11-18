@@ -5,7 +5,7 @@
 # Contributor: vEX <vex@niechift.com>
 
 pkgname=pcsx2-git
-pkgver=1.5.0+3312+g132caf7f4
+pkgver=1.5.0+3313+g89848346a
 pkgrel=1
 pkgdesc="A Sony PlayStation 2 emulator"
 arch=('x86_64')
