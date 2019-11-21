@@ -42,6 +42,9 @@ prepare() {
 build() {
   cd pcsx2/build
 
+  export CC=clang
+  export CXX=clang++
+
   cmake .. \
     -DCMAKE_BUILD_TYPE='Release' \
     -DCMAKE_BUILD_PO='FALSE' \
