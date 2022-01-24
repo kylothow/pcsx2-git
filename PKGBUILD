@@ -1,67 +1,69 @@
 # Maintainer: rafaelff <rafaelff@gnome.org>, WeirdBeard <obarrtimothy@gmail.com>
 # Contributor: Maxime Gauduin <alucryd@archlinux.org>
 # Contributor: Themaister <maister@archlinux.us>
+# Contributor: Michele Beccalossi <michele.beccalossi@protonmail.com>
 
 pkgname=pcsx2-git
 pkgver=1.7.2268
 pkgrel=1
-pkgdesc='A Sony PlayStation 2 emulator'
-arch=(x86_64)
-url=https://www.pcsx2.net
-license=(
-  GPL2
-  GPL3
-  LGPL2.1
-  LGPL3
-)
-
-install=dev9.install
-
-options=(!lto)
-
+pkgdesc="A Sony PlayStation 2 emulator"
+arch=('x86_64')
+url="https://www.pcsx2.net"
+license=('GPL2' 'GPL3' 'LGPL2.1' 'LGPL3')
 depends=(
-  libaio
-  libjpeg-turbo
-  libpcap
-  libpulse
-  portaudio
-  libsamplerate
-  sdl2
-  soundtouch
-  wxgtk3
-  wayland
-  rapidyaml-git # only exists in the AUR
+  'libaio'
+  'libjpeg-turbo'
+  'libpcap'
+  'libpulse'
+  'portaudio'
+  'libsamplerate'
+  'sdl2'
+  'soundtouch'
+  'wxgtk3'
+  'wayland'
+  'rapidyaml-git'
 )
 makedepends=(
-  cmake
-  git
-  xorgproto
-  ninja
-  swig
-  python
-  vulkan-headers
+  'cmake'
+  'git'
+  'xorgproto'
+  'ninja'
+  'swig'
+  'python'
+  'vulkan-headers'
 )
-provides=(pcsx2)
-conflicts=(pcsx2)
-source=(git+https://github.com/PCSX2/pcsx2.git
-git+https://github.com/fmtlib/fmt.git
-git+https://github.com/ocornut/imgui.git
-git+https://github.com/rtissera/libchdr.git
-git+https://github.com/google/googletest.git
-git+https://github.com/mozilla/cubeb.git
-git+https://github.com/KhronosGroup/glslang.git
+provides=('pcsx2')
+conflicts=('pcsx2')
+options=('!lto')
+install=dev9.install
+source=(
+  'git+https://github.com/PCSX2/pcsx2.git'
+  'git+https://github.com/fmtlib/fmt.git'
+  'git+https://github.com/rtissera/libchdr.git'
+  'git+https://github.com/google/googletest.git'
+  'git+https://github.com/mozilla/cubeb.git'
+  'git+https://github.com/ocornut/imgui.git'
+  'git+https://github.com/KhronosGroup/glslang.git'
 )
-sha256sums=(SKIP)
+sha256sums=(
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+)
 
-pkgver()
-{
+pkgver() {
   cd pcsx2
+
   git describe --tags | sed 's/^v//; s/-dev//; s/-/.r/; s/-g/./'
 }
 
-prepare()
-{
+prepare() {
   cd $srcdir/pcsx2/3rdparty
+
   git submodule init
   git config submodule.https://github.com/fmtlib/src/fmt.git.url fmt
   git config submodule.https://github.com/rtissera/libchdr.git.url libchdr
@@ -72,8 +74,7 @@ prepare()
   git submodule update
 }
 
-build()
-{
+build() {
   mkdir -p build
   cd build
 
@@ -88,19 +89,12 @@ build()
     -DPACKAGE_MODE=ON \
     -DXDG_STD=TRUE \
     -DDISABLE_SETCAP=ON
+
   ninja -j$(nproc)
 }
 
-package()
-{
-    DESTDIR="${pkgdir}" cmake --install build
+package() {
+  DESTDIR="${pkgdir}" cmake --install build
 }
 
 # vim: ts=2 sw=2 et:
-sha256sums=('SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP')
