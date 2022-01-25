@@ -1,0 +1,10 @@
+cubeb
+fmt
+glslang
+googletest
+imgui
+libchdr
+pcsx2
+pkg
+src
+*.pkg.tar.zst
