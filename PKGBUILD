@@ -8,7 +8,7 @@ pkgver=1.7.2276
 pkgrel=1
 pkgdesc="A Sony PlayStation 2 emulator"
 arch=('x86_64')
-url="https://www.pcsx2.net"
+url="https://pcsx2.net"
 license=('GPL2' 'GPL3' 'LGPL2.1' 'LGPL3')
 depends=(
   'libaio'
