@@ -21,7 +21,7 @@ depends=(
   'soundtouch'
   'wxgtk3'
   'wayland'
-  'rapidyaml-git'
+  'rapidyaml'
 )
 makedepends=(
   'cmake'
