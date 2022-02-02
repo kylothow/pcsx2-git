@@ -4,7 +4,7 @@
 # Contributor: Michele Beccalossi <michele.beccalossi@protonmail.com>
 
 pkgname=pcsx2-git
-pkgver=1.7.2283
+pkgver=1.7.2313
 pkgrel=1
 pkgdesc="A Sony PlayStation 2 emulator"
 arch=('x86_64')
@@ -44,8 +44,10 @@ source=(
   'git+https://github.com/mozilla/cubeb.git'
   'git+https://github.com/ocornut/imgui.git'
   'git+https://github.com/KhronosGroup/glslang.git'
+  'git+https://github.com/libsdl-org/SDL.git'
 )
 sha256sums=(
+  'SKIP'
   'SKIP'
   'SKIP'
   'SKIP'
@@ -71,6 +73,7 @@ prepare() {
   git config submodule.https://github.com/mozilla/cubeb.git.url cubeb
   git config submodule.https://github.com/ocornut/imgui.git.url imgui
   git config submodule.https://github.com/KhronosGroup/glslang.git glslang
+  git config submodule.https://github.com/libsdl-org/SDL.git SDL
   git submodule update
 }
 
