@@ -4,7 +4,7 @@
 # Contributor: Michele Beccalossi <michele.beccalossi@protonmail.com>
 
 pkgname=pcsx2-git
-pkgver=1.7.2357
+pkgver=1.7.2362
 pkgrel=1
 pkgdesc="A Sony PlayStation 2 emulator"
 arch=('x86_64')
