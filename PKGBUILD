@@ -22,6 +22,7 @@ depends=(
   'wxgtk3'
   'wayland'
   'rapidyaml'
+  'fmt'
 )
 makedepends=(
   'cmake'
