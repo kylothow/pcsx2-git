@@ -4,7 +4,7 @@
 # Contributor: Michele Beccalossi <michele.beccalossi@protonmail.com>
 
 pkgname=pcsx2-git
-pkgver=1.7.2367
+pkgver=1.7.2379
 pkgrel=1
 pkgdesc="A Sony PlayStation 2 emulator"
 arch=('x86_64')
@@ -58,6 +58,8 @@ sha256sums=(
   'SKIP'
 )
 
+options=(debug !strip)
+
 pkgver() {
   cd pcsx2
 
@@ -83,7 +85,7 @@ build() {
   cd build
 
   cmake ../pcsx2 \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
     -DCMAKE_SKIP_RPATH=ON \
