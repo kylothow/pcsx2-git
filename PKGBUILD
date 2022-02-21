@@ -58,8 +58,6 @@ sha256sums=(
   'SKIP'
 )
 
-options=(debug !strip)
-
 pkgver() {
   cd pcsx2
 
@@ -85,7 +83,7 @@ build() {
   cd build
 
   cmake ../pcsx2 \
-    -DCMAKE_BUILD_TYPE=Debug \
+    -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
     -DCMAKE_SKIP_RPATH=ON \
