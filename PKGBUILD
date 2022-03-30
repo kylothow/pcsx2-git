@@ -4,7 +4,7 @@
 # Contributor: Michele Beccalossi <michele.beccalossi@protonmail.com>
 
 pkgname=pcsx2-git
-pkgver=1.7.2428
+pkgver=1.7.2514
 pkgrel=1
 pkgdesc="A Sony PlayStation 2 emulator"
 arch=('x86_64')
@@ -14,6 +14,10 @@ depends=(
   'libaio'
   'libjpeg-turbo'
   'libpcap'
+  'libgl' # For Steam Deck
+  'xorg-xrandr' # For Steam Deck
+  'libxrender' # For Steam Deck
+  'linux-api-headers' # For Steam Deck
   'libpulse'
   'portaudio'
   'libsamplerate'
@@ -21,7 +25,7 @@ depends=(
   'soundtouch'
   'wxgtk3'
   'wayland'
-  'rapidyaml'
+  'rapidyaml-git'
   'fmt'
 )
 makedepends=(
